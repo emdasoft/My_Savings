@@ -5,6 +5,7 @@ data class CardItem(
     var title: String,
     var amount: Double,
     var type: String,
+    var currency: String,
     var category: String,
 ) {
     companion object {

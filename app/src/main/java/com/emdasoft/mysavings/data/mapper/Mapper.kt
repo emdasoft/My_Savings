@@ -10,7 +10,8 @@ class Mapper {
         title = dbModel.title,
         amount = dbModel.amount,
         type = dbModel.type,
-        category = dbModel.category
+        category = dbModel.category,
+        currency = dbModel.currency
     )
 
     fun mapEntityToDbModel(cardItem: CardItem) = CardItemDbModel(
@@ -18,7 +19,8 @@ class Mapper {
         title = cardItem.title,
         amount = cardItem.amount,
         type = cardItem.type,
-        category = cardItem.category
+        category = cardItem.category,
+        currency = cardItem.currency
     )
 
     fun mapDbModelListToEntityList(list: List<CardItemDbModel>) = list.map {

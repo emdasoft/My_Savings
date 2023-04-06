@@ -2,7 +2,6 @@ package com.emdasoft.mysavings.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.emdasoft.mysavings.domain.entity.Category
 
 @Entity("cards")
 data class CardItemDbModel(
@@ -12,4 +11,5 @@ data class CardItemDbModel(
     val amount: Double,
     val type: String,
     val category: String,
+    val currency: String
 )

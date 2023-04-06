@@ -10,6 +10,7 @@ import com.emdasoft.mysavings.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
+
     private var _binding: FragmentMainBinding? = null
     private val binding: FragmentMainBinding
         get() = _binding ?: throw RuntimeException("FragmentMainBinding = null")
