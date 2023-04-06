@@ -1,9 +1,13 @@
 package com.emdasoft.mysavings.domain.entity
 
 data class CardItem(
-    val id: Int,
-    val title: String,
-    val amount: Double,
-    val type: String,
-    val category: Category,
-)
+    var id: Int = UNDEFINED_ID,
+    var title: String,
+    var amount: Double,
+    var type: String,
+    var category: String,
+) {
+    companion object {
+        private const val UNDEFINED_ID = 0
+    }
+}
