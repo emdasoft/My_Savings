@@ -2,6 +2,7 @@ package com.emdasoft.mysavings.domain.repository
 
 import androidx.lifecycle.LiveData
 import com.emdasoft.mysavings.domain.entity.CardItem
+import com.emdasoft.mysavings.domain.entity.Category
 
 interface Repository {
 
@@ -25,6 +26,6 @@ interface Repository {
 
     suspend fun getMoney(amount: Double, sourceCard: CardItem)
 
-    suspend fun getBudget(amount: Double)
+    fun getBudget(amount: Double) : LiveData<List<Double>>
 
 }
