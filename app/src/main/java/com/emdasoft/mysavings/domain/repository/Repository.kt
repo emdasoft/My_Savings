@@ -26,6 +26,6 @@ interface Repository {
 
     suspend fun getMoney(amount: Double, sourceCard: CardItem)
 
-    fun getBudget(amount: Double) : LiveData<List<Double>>
+    fun getBudget(amount: Double): LiveData<List<Double>>
 
 }

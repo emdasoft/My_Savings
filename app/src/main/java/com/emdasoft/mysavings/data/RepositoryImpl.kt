@@ -4,9 +4,11 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.emdasoft.mysavings.data.database.CardDatabase
+import com.emdasoft.mysavings.data.database.CardItemDbModel
 import com.emdasoft.mysavings.data.mapper.Mapper
 import com.emdasoft.mysavings.domain.entity.CardItem
 import com.emdasoft.mysavings.domain.repository.Repository
+import kotlin.math.roundToInt
 
 class RepositoryImpl(application: Application) : Repository {
 
@@ -22,7 +24,7 @@ class RepositoryImpl(application: Application) : Repository {
     }
 
     override suspend fun getCardItem(itemId: Int): CardItem {
-        TODO("Not yet implemented")
+        return mapper.mapDbModelToEntity(cardListDao.getCardItem(itemId))
     }
 
     override suspend fun addCard(cardItem: CardItem) {
@@ -30,16 +32,35 @@ class RepositoryImpl(application: Application) : Repository {
     }
 
     override suspend fun deleteCard(cardItem: CardItem) {
-        TODO("Not yet implemented")
+        cardListDao.deleteCardItem(mapper.mapEntityToDbModel(cardItem))
     }
 
     override suspend fun editCard(cardItem: CardItem) {
-        TODO("Not yet implemented")
+        cardListDao.addCard(mapper.mapEntityToDbModel(cardItem))
     }
 
     override fun getBalance(): LiveData<Double> {
-        TODO("Not yet implemented")
+        return MediatorLiveData<Double>().apply {
+            addSource(cardListDao.getCardList()) {
+                value = updateCurrentBalance(it)
+            }
+        }
     }
+
+    private fun updateCurrentBalance(list: List<CardItemDbModel>): Double {
+        var total = 0.0
+        for (item in list) {
+            if (item.currency == "USD" || item.currency == "EUR") {
+                total += item.amount
+            }
+            if (item.currency == "BYN") {
+                total += item.amount / USD_RATE
+            }
+        }
+        total = (total * 100).roundToInt() / 100.00
+        return total
+    }
+
 
     override fun getBalanceByCategory(): LiveData<List<Double>> {
         TODO("Not yet implemented")
@@ -63,5 +84,9 @@ class RepositoryImpl(application: Application) : Repository {
 
     override fun getBudget(amount: Double): LiveData<List<Double>> {
         TODO("Not yet implemented")
+    }
+
+    companion object {
+        private const val USD_RATE = 2.9
     }
 }

@@ -2,6 +2,8 @@ package com.emdasoft.mysavings.data.mapper
 
 import com.emdasoft.mysavings.data.database.CardItemDbModel
 import com.emdasoft.mysavings.domain.entity.CardItem
+import com.emdasoft.mysavings.domain.entity.Category
+import com.emdasoft.mysavings.domain.entity.Currency
 
 class Mapper {
 
@@ -10,8 +12,8 @@ class Mapper {
         title = dbModel.title,
         amount = dbModel.amount,
         type = dbModel.type,
-        category = dbModel.category,
-        currency = dbModel.currency
+        category = Category.valueOf(dbModel.category),
+        currency = Currency.valueOf(dbModel.currency)
     )
 
     fun mapEntityToDbModel(cardItem: CardItem) = CardItemDbModel(
@@ -19,8 +21,8 @@ class Mapper {
         title = cardItem.title,
         amount = cardItem.amount,
         type = cardItem.type,
-        category = cardItem.category,
-        currency = cardItem.currency
+        category = cardItem.category.toString(),
+        currency = cardItem.currency.toString()
     )
 
     fun mapDbModelListToEntityList(list: List<CardItemDbModel>) = list.map {

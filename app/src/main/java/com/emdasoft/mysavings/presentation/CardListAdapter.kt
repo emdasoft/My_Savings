@@ -1,15 +1,22 @@
 package com.emdasoft.mysavings.presentation
 
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.emdasoft.mysavings.R
-import com.emdasoft.mysavings.databinding.CardItemBinding
 import com.emdasoft.mysavings.domain.entity.CardItem
 
-class CardListAdapter : RecyclerView.Adapter<CardListAdapter.CardViewHolder>() {
+class CardListAdapter(
+    private val listener: SetOnClickListeners,
+    private val metrics: DisplayMetrics
+) :
+    RecyclerView.Adapter<CardViewHolder>() {
+
+    private var itemMargin: Int = 0
+    private var itemWidth: Int = 0
+
 
     var cardsList = listOf<CardItem>()
         set(value) {
@@ -18,19 +25,6 @@ class CardListAdapter : RecyclerView.Adapter<CardListAdapter.CardViewHolder>() {
             diffResult.dispatchUpdatesTo(this)
             field = value
         }
-
-
-    class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        private val binding = CardItemBinding.bind(itemView)
-        fun bindItem(cardItem: CardItem) = with(binding) {
-            tvCardLabel.text = cardItem.title
-            tvCardAmount.text = cardItem.amount.toString()
-            tvCategory.text = cardItem.category
-            tvCardCurrency.text = cardItem.currency
-        }
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
@@ -46,6 +40,42 @@ class CardListAdapter : RecyclerView.Adapter<CardListAdapter.CardViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
-        holder.bindItem(cardsList[position])
+        var currentItemWidth = itemWidth
+        when (position) {
+            0 -> {
+                currentItemWidth += itemMargin
+                holder.itemView.setPadding(itemMargin, 0, 0, 0)
+            }
+            itemCount - 1 -> {
+                currentItemWidth += itemMargin
+                holder.itemView.setPadding(0, 0, itemMargin, 0)
+            }
+            else -> {
+                holder.itemView.setPadding(0, 0, 0, 0)
+            }
+        }
+
+        val height = holder.itemView.layoutParams.height
+        holder.itemView.layoutParams = ViewGroup.LayoutParams(currentItemWidth, height)
+
+        holder.bindItem(cardsList[position], listener)
     }
+
+    fun setItemMargin(itemMargin: Int) {
+        this.itemMargin = itemMargin
+    }
+
+    fun updateDisplayMetrics() {
+        itemWidth = metrics.widthPixels - itemMargin * 2
+    }
+
+
+    interface SetOnClickListeners {
+
+        fun setOnClickListener(cardItem: CardItem)
+
+        fun setOnRecycleClickListener(cardItem: CardItem)
+
+    }
+
 }

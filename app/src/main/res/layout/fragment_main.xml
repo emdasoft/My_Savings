@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:text="@string/total_balance_title"
             app:fontFamily="@font/alatsi"
             tools:text="Total balance:" />
 
@@ -30,7 +31,8 @@
             android:id="@+id/total_balance_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:fontFamily="@font/alatsi"
             tools:text="$ 10000" />
 
@@ -39,8 +41,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_card_list"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:padding="16dp"
+        android:layout_height="200dp"
+        android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/total_balance_layout"
@@ -66,6 +68,16 @@
         android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/temp_button_refresh"
+        android:layout_width="wrap_content"
+        android:src="@drawable/baseline_refresh_24"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

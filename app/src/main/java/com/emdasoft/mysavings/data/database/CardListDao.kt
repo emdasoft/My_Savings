@@ -1,10 +1,7 @@
 package com.emdasoft.mysavings.data.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface CardListDao {
@@ -13,6 +10,16 @@ interface CardListDao {
     fun getCardList(): LiveData<List<CardItemDbModel>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addCard(cardItemDbModel: CardItemDbModel)
+    suspend fun addCard(cardItemDbModel: CardItemDbModel)
+
+    @Query("SELECT * FROM cards WHERE id=:itemId LIMIT 1")
+    suspend fun getCardItem(itemId: Int): CardItemDbModel
+
+    @Delete
+    suspend fun deleteCardItem(cardItemDbModel: CardItemDbModel)
+
+    @Query("SELECT amount FROM cards")
+    suspend fun getAllAmounts() : List<Double>
+
 
 }
