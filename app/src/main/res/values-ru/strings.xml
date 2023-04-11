@@ -3,4 +3,12 @@
     <string name="app_name">Мои сбережения</string>
     <string name="total_balance_title">Общий баланс:</string>
     <string name="total_balance_count">%s USD</string>
+    <string name="receive">Доход</string>
+    <string name="spend">Расход</string>
+    <string name="transfer">Перевод</string>
+    <string name="choose_currency">валюта счета</string>
+    <string name="title">имя счета</string>
+    <string name="amount">баланс</string>
+    <string name="choose_category">категория</string>
+    <string name="save_button">Сохранить</string>
 </resources>

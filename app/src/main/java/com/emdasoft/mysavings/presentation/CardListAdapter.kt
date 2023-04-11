@@ -27,6 +27,7 @@ class CardListAdapter(
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {
+
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.card_item,
             parent,
@@ -40,6 +41,7 @@ class CardListAdapter(
     }
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
+        holder.bindItem(cardsList[position], listener)
         var currentItemWidth = itemWidth
         when (position) {
             0 -> {
@@ -57,8 +59,6 @@ class CardListAdapter(
 
         val height = holder.itemView.layoutParams.height
         holder.itemView.layoutParams = ViewGroup.LayoutParams(currentItemWidth, height)
-
-        holder.bindItem(cardsList[position], listener)
     }
 
     fun setItemMargin(itemMargin: Int) {
@@ -68,7 +68,6 @@ class CardListAdapter(
     fun updateDisplayMetrics() {
         itemWidth = metrics.widthPixels - itemMargin * 2
     }
-
 
     interface SetOnClickListeners {
 

@@ -2,4 +2,12 @@
     <string name="app_name">My Savings</string>
     <string name="total_balance_title">Total balance:</string>
     <string name="total_balance_count">%s USD</string>
+    <string name="receive">receive</string>
+    <string name="spend">spend</string>
+    <string name="transfer">transfer</string>
+    <string name="choose_currency">card currency</string>
+    <string name="title">card name</string>
+    <string name="amount">card amount</string>
+    <string name="choose_category">category</string>
+    <string name="save_button">Save</string>
 </resources>

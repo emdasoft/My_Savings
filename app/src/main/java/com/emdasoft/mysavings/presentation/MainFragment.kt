@@ -1,11 +1,15 @@
 package com.emdasoft.mysavings.presentation
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context.NOTIFICATION_SERVICE
+import android.os.Build
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -45,7 +49,7 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
 
         binding.tempButtonAdd.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, AddCardFragment.newInstance())
+                .replace(R.id.main_container, CardFragment.newInstance())
                 .addToBackStack(null)
                 .commit()
         }
@@ -71,6 +75,7 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
         binding.rvCardList.adapter = rvAdapter
         rvAdapter.setItemMargin(resources.getDimension(R.dimen.pager_margin).toInt())
         rvAdapter.updateDisplayMetrics()
+        binding.rvCardList.clipChildren = false
         PagerSnapHelper().attachToRecyclerView(binding.rvCardList)
     }
 
@@ -78,9 +83,28 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
         return resources.displayMetrics
     }
 
+    private fun showNotification(title: String, id: Int) {
+        val notificationManager =
+            requireActivity().getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                "channel_id",
+                "channel_name",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+        val notification = NotificationCompat.Builder(requireContext(), "channel_id")
+            .setContentTitle("Cards")
+            .setContentText(title)
+            .setSmallIcon(R.drawable.ic_add)
+            .build()
+        notificationManager.notify(id, notification)
+    }
+
 
     override fun setOnClickListener(cardItem: CardItem) {
-        Toast.makeText(requireContext(), cardItem.title, Toast.LENGTH_SHORT).show()
+        showNotification(cardItem.title, cardItem.id)
     }
 
     override fun setOnRecycleClickListener(cardItem: CardItem) {
@@ -90,11 +114,6 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = MainFragment()
     }
 
 }

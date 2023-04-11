@@ -79,7 +79,9 @@ class RepositoryImpl(application: Application) : Repository {
     }
 
     override suspend fun getMoney(amount: Double, sourceCard: CardItem) {
-        TODO("Not yet implemented")
+        val newAmount = sourceCard.amount + amount
+        val item = sourceCard.copy(amount = newAmount)
+        addCard(item)
     }
 
     override fun getBudget(amount: Double): LiveData<List<Double>> {

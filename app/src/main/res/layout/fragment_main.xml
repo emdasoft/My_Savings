@@ -22,8 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:textSize="20sp"
             android:text="@string/total_balance_title"
+            android:textSize="20sp"
             app:fontFamily="@font/alatsi"
             tools:text="Total balance:" />
 
@@ -48,36 +48,90 @@
         app:layout_constraintTop_toBottomOf="@id/total_balance_layout"
         tools:listitem="@layout/card_item" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tabLayout"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:layout_constraintStart_toStartOf="@id/rv_card_list"
-        app:layout_constraintEnd_toEndOf="@id/rv_card_list"
-        app:layout_constraintTop_toBottomOf="@id/rv_card_list"/>
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv_card_list">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/receiveCard"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:id="@+id/txtReceive"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/receive"
+                app:drawableTopCompat="@drawable/tv_receive" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/spendCard"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:id="@+id/txtSpend"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/spend"
+                app:drawableTopCompat="@drawable/tv_spend" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/transferCard"
+            android:layout_width="104dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="4dp"
+            app:cardUseCompatPadding="true">
+
+            <TextView
+                android:id="@+id/txtTransfer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:gravity="center"
+                android:text="@string/transfer"
+                app:drawableTopCompat="@drawable/tv_transfer" />
+
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/temp_button_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@android:color/holo_orange_light"
         android:src="@drawable/ic_add"
         app:borderWidth="0dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/temp_button_refresh"
-        android:layout_width="wrap_content"
-        android:src="@drawable/baseline_refresh_24"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
