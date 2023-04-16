@@ -49,7 +49,7 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
 
         binding.tempButtonAdd.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, CardFragment.newInstance())
+                .replace(R.id.main_container, CardFragment.newInstanceAddMode())
                 .addToBackStack(null)
                 .commit()
         }
@@ -109,6 +109,13 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
 
     override fun setOnRecycleClickListener(cardItem: CardItem) {
         viewModel.deleteItem(cardItem)
+    }
+
+    override fun setOnEditClickListener(cardItem: CardItem) {
+        requireActivity().supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, CardFragment.newInstanceEditMode(cardItem.id))
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onDestroyView() {

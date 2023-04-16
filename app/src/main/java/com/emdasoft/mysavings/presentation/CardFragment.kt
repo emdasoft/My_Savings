@@ -14,12 +14,20 @@ import com.emdasoft.mysavings.domain.entity.Currency
 
 class CardFragment : Fragment() {
 
+    private var screenMode = UNKNOWN_SCREEN_MODE
+    private var cardItemId = UNDEFINED_ID
+
     private var _binding: FragmentCardBinding? = null
     private val binding: FragmentCardBinding
         get() = _binding ?: throw RuntimeException("FragmentAddCardBinding = null")
 
     private val viewModel by lazy {
         ViewModelProvider(this)[CardItemViewModel::class.java]
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        parseArgs()
     }
 
     override fun onCreateView(
@@ -33,12 +41,24 @@ class CardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setTextChangedListeners()
+        launchRightMode()
 
         viewModelObserve()
 
         bindAutoCompletes()
 
+        setTextChangedListeners()
+
+    }
+
+    private fun launchRightMode() {
+        when (screenMode) {
+            EDIT_MODE -> launchEditMode()
+            ADD_MODE -> launchAddMode()
+        }
+    }
+
+    private fun launchAddMode() {
         with(binding) {
             saveButton.setOnClickListener {
                 viewModel.addCard(
@@ -48,6 +68,37 @@ class CardFragment : Fragment() {
                     autoCompleteCategory.text?.toString()
                 )
             }
+        }
+    }
+
+    private fun launchEditMode() {
+        viewModel.getCardItem(cardItemId)
+        viewModel.cardItemLD.observe(viewLifecycleOwner) {
+            with(binding) {
+                etTitle.setText(it.title)
+                etCount.setText(it.amount.toString())
+            }
+        }
+        with(binding) {
+            saveButton.setOnClickListener {
+                viewModel.editCard(
+                    etTitle.text?.toString(),
+                    etCount.text?.toString(),
+                    autoCompleteCurrency.text?.toString(),
+                    autoCompleteCategory.text?.toString()
+                )
+            }
+        }
+    }
+
+    private fun parseArgs() {
+        if (requireArguments().containsKey(SCREEN_MODE)) {
+            requireArguments().getString(SCREEN_MODE)?.let {
+                screenMode = it
+            }
+        } else throw RuntimeException("Unknown screen mode")
+        if (screenMode == EDIT_MODE) {
+            cardItemId = requireArguments().getInt(ITEM_ID)
         }
     }
 
@@ -145,7 +196,30 @@ class CardFragment : Fragment() {
 
     companion object {
 
-        @JvmStatic
-        fun newInstance() = CardFragment()
+        private const val SCREEN_MODE = "screen_mode"
+        private const val ITEM_ID = "item_id"
+        private const val ADD_MODE = "add_mode"
+        private const val EDIT_MODE = "edit_mode"
+        private const val UNDEFINED_ID = -1
+        private const val UNKNOWN_SCREEN_MODE = ""
+
+
+        fun newInstanceAddMode(): CardFragment {
+            return CardFragment().apply {
+                arguments = Bundle().apply {
+                    putString(SCREEN_MODE, ADD_MODE)
+                }
+            }
+        }
+
+        fun newInstanceEditMode(cardItemId: Int): CardFragment {
+            return CardFragment().apply {
+                arguments = Bundle().apply {
+                    putString(SCREEN_MODE, EDIT_MODE)
+                    putInt(ITEM_ID, cardItemId)
+                }
+            }
+        }
     }
+
 }

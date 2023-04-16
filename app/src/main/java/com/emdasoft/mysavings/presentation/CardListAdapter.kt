@@ -75,6 +75,8 @@ class CardListAdapter(
 
         fun setOnRecycleClickListener(cardItem: CardItem)
 
+        fun setOnEditClickListener(cardItem: CardItem)
+
     }
 
 }

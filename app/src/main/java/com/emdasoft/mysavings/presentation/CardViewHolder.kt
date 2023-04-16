@@ -24,6 +24,9 @@ class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             deleteButton.setOnClickListener {
                 listener.setOnRecycleClickListener(cardItem)
             }
+            editButton.setOnClickListener {
+                listener.setOnEditClickListener(cardItem)
+            }
         }
 
 }

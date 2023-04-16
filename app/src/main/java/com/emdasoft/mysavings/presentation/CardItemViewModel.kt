@@ -10,6 +10,8 @@ import com.emdasoft.mysavings.domain.entity.CardItem
 import com.emdasoft.mysavings.domain.entity.Category
 import com.emdasoft.mysavings.domain.entity.Currency
 import com.emdasoft.mysavings.domain.usecases.AddCardItemUseCase
+import com.emdasoft.mysavings.domain.usecases.EditCardItemUseCase
+import com.emdasoft.mysavings.domain.usecases.GetCardItemUseCase
 import kotlinx.coroutines.launch
 
 class CardItemViewModel(application: Application) : AndroidViewModel(application) {
@@ -17,8 +19,8 @@ class CardItemViewModel(application: Application) : AndroidViewModel(application
     private val repository = RepositoryImpl(application)
 
     private val addCardItemUseCase = AddCardItemUseCase(repository)
-//    private val editCardItemUseCase = EditCardItemUseCase(repository)
-//    private val getCardItemUseCase = GetCardItemUseCase(repository)
+    private val editCardItemUseCase = EditCardItemUseCase(repository)
+    private val getCardItemUseCase = GetCardItemUseCase(repository)
 
     private val _shouldScreenClose = MutableLiveData<Boolean>()
     val shouldScreenClose: LiveData<Boolean>
@@ -39,6 +41,10 @@ class CardItemViewModel(application: Application) : AndroidViewModel(application
     private val _showInputAmountError = MutableLiveData<Boolean>()
     val showInputAmountError: LiveData<Boolean>
         get() = _showInputAmountError
+
+    private val _cardItemLD = MutableLiveData<CardItem>()
+    val cardItemLD: LiveData<CardItem>
+        get() = _cardItemLD
 
     fun addCard(
         titleInput: String?,
@@ -62,6 +68,43 @@ class CardItemViewModel(application: Application) : AndroidViewModel(application
                 )
                 addCardItemUseCase(cardItem)
                 _shouldScreenClose.value = true
+            }
+        }
+    }
+
+    fun editCard(
+        titleInput: String?,
+        amountInput: String?,
+        currencyInput: String?,
+        categoryInput: String?,
+    ) {
+        viewModelScope.launch {
+            val title = parseInputString(titleInput)
+            val amount = parseAmount(amountInput)
+            val currency = parseInputString(currencyInput)
+            val category = parseInputString(categoryInput)
+            val isValid = validateInput(title, amount, currency, category)
+            if (isValid) {
+                _cardItemLD.value?.let {
+                    editCardItemUseCase(
+                        it.copy(
+                            title = title,
+                            amount = amount,
+                            type = "CASH",
+                            currency = Currency.valueOf(currency),
+                            category = Category.valueOf(category)
+                        )
+                    )
+                    _shouldScreenClose.value = true
+                }
+            }
+        }
+    }
+
+    fun getCardItem(itemId: Int) {
+        viewModelScope.launch {
+            getCardItemUseCase(itemId).let {
+                _cardItemLD.value = it
             }
         }
     }
