@@ -53,6 +53,13 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
                 .addToBackStack(null)
                 .commit()
         }
+
+        binding.spendCard.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, SpendFragment.newInstance())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun viewModelObserve() {

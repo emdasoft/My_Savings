@@ -8,6 +8,11 @@ data class CardItem(
     var category: Category,
     var id: Int = UNDEFINED_ID,
 ) {
+
+    override fun toString(): String {
+        return "• $title • ($amount $currency)"
+    }
+
     companion object {
         private const val UNDEFINED_ID = 0
         private const val DEFAULT_TYPE = "CASH"

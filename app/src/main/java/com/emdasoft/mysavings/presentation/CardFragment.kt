@@ -77,6 +77,8 @@ class CardFragment : Fragment() {
             with(binding) {
                 etTitle.setText(it.title)
                 etCount.setText(it.amount.toString())
+                autoCompleteCategory.setText(it.category.toString())
+                autoCompleteCurrency.setText(it.currency.name)
             }
         }
         with(binding) {

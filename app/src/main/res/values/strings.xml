@@ -10,4 +10,7 @@
     <string name="amount">card amount</string>
     <string name="choose_category">category</string>
     <string name="save_button">Save</string>
+    <string name="enter_amount">enter amount</string>
+    <string name="choose_card">choose card</string>
+    <string name="spend_button">spend</string>
 </resources>

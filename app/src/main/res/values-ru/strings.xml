@@ -11,4 +11,7 @@
     <string name="amount">баланс</string>
     <string name="choose_category">категория</string>
     <string name="save_button">Сохранить</string>
+    <string name="enter_amount">введите сумму</string>
+    <string name="choose_card">выбрать счет</string>
+    <string name="spend_button">потратить</string>
 </resources>
