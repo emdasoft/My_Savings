@@ -76,14 +76,14 @@ class RepositoryImpl(application: Application) : Repository {
 
     override suspend fun spendMoney(amount: Double, sourceCard: CardItem) {
         val newAmount = sourceCard.amount - amount
-        val item = sourceCard.copy(amount = newAmount)
-        addCard(item)
+        val newItem = sourceCard.copy(amount = newAmount)
+        addCard(newItem)
     }
 
     override suspend fun getMoney(amount: Double, sourceCard: CardItem) {
         val newAmount = sourceCard.amount + amount
-        val item = sourceCard.copy(amount = newAmount)
-        addCard(item)
+        val newItem = sourceCard.copy(amount = newAmount)
+        addCard(newItem)
     }
 
     override fun getBudget(amount: Double): LiveData<List<Double>> {

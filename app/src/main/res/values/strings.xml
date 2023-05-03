@@ -13,4 +13,5 @@
     <string name="enter_amount">enter amount</string>
     <string name="choose_card">choose card</string>
     <string name="spend_button">spend</string>
+    <string name="get_button">get</string>
 </resources>

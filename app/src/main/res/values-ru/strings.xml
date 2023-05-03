@@ -14,4 +14,5 @@
     <string name="enter_amount">введите сумму</string>
     <string name="choose_card">выбрать счет</string>
     <string name="spend_button">потратить</string>
+    <string name="get_button">получить</string>
 </resources>

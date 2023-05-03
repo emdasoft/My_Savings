@@ -8,15 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.emdasoft.mysavings.data.RepositoryImpl
 import com.emdasoft.mysavings.domain.entity.CardItem
 import com.emdasoft.mysavings.domain.usecases.GetCardListUseCase
-import com.emdasoft.mysavings.domain.usecases.SpendMoneyUseCase
+import com.emdasoft.mysavings.domain.usecases.GetMoneyUseCase
 import kotlinx.coroutines.launch
 
-class SpendViewModel(application: Application) : AndroidViewModel(application) {
+class GetMoneyViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = RepositoryImpl(application)
 
     private val getCardListUseCase = GetCardListUseCase(repository)
-    private val spendMoneyUseCase = SpendMoneyUseCase(repository)
+    private val getMoneyUseCase = GetMoneyUseCase(repository)
 
     private val _cardList = getCardListUseCase()
     val cardList: LiveData<List<CardItem>>
@@ -35,35 +35,33 @@ class SpendViewModel(application: Application) : AndroidViewModel(application) {
         get() = _showChooseCardError
 
 
-    fun spendMoney(amountInput: String?, sourceCardInput: Any?) {
+    fun getMoney(amountInput: String?, sourceCardInput: Any?) {
         val amount = parseAmount(amountInput)
-        val sourceCard = try {
-            sourceCardInput as CardItem
-        } catch (e: Exception) {
+        val sourceCard = if (sourceCardInput is CardItem) {
+            sourceCardInput
+        } else {
             null
         }
         val isValid = isValid(amount, sourceCard)
         if (isValid) {
             viewModelScope.launch {
                 sourceCard?.let {
-                    spendMoneyUseCase(amount, it)
+                    getMoneyUseCase(amount, it)
                     _shouldScreenClose.value = true
                 }
             }
         }
     }
 
-
-    private fun isValid(amount: Double, card: CardItem?): Boolean {
+    private fun isValid(amount: Double, sourceCard: CardItem?): Boolean {
         var result = true
-        if (card == null) {
+        if (amount <= 0) {
+            _showInputAmountError.value = true
             result = false
+        }
+        if (sourceCard == null) {
             _showChooseCardError.value = true
-        } else {
-            if (amount <= 0.0 || amount > card.amount) {
-                result = false
-                _showInputAmountError.value = true
-            }
+            result = false
         }
         return result
     }
@@ -75,5 +73,6 @@ class SpendViewModel(application: Application) : AndroidViewModel(application) {
     fun resetChooseCardError() {
         _showChooseCardError.value = false
     }
+
 
 }

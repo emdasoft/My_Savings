@@ -47,6 +47,11 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
 
         viewModelObserve()
 
+        setOnClickListeners()
+
+    }
+
+    private fun setOnClickListeners() {
         binding.tempButtonAdd.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container, CardFragment.newInstanceAddMode())
@@ -57,6 +62,13 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
         binding.spendCard.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container, SpendFragment.newInstance())
+                .addToBackStack(null)
+                .commit()
+        }
+
+        binding.receiveCard.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, GetMoneyFragment.newInstance())
                 .addToBackStack(null)
                 .commit()
         }

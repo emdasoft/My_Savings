@@ -109,19 +109,6 @@ class CardItemViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-
-    private fun parseInputString(stringInput: String?): String {
-        return stringInput?.trim() ?: ""
-    }
-
-    private fun parseAmount(amountInput: String?): Double {
-        return try {
-            amountInput?.trim()?.toDouble() ?: 0.0
-        } catch (e: Exception) {
-            0.0
-        }
-    }
-
     private fun validateInput(
         title: String,
         amount: Double,
