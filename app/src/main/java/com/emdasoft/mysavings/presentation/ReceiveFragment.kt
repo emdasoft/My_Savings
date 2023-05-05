@@ -83,7 +83,7 @@ class ReceiveFragment : Fragment() {
         }
 
         viewModel.showInputAmountError.observe(viewLifecycleOwner) {
-            val message = "Incorrect amount!"
+            val message = getString(R.string.incorrect_amount_error)
             if (it) {
                 binding.tilAmount.error = message
             } else {
@@ -92,14 +92,13 @@ class ReceiveFragment : Fragment() {
         }
 
         viewModel.showChooseCardError.observe(viewLifecycleOwner) {
-            val message = "Incorrect amount!"
+            val message = getString(R.string.choose_card_error)
             if (it) {
                 binding.tilCardToGet.error = message
             } else {
                 binding.tilCardToGet.error = null
             }
         }
-
     }
 
     override fun onDestroyView() {

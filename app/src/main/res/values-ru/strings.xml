@@ -19,4 +19,6 @@
     <string name="to_card">на счет</string>
     <string name="transfer_button">перевести</string>
     <string name="add_card">add card</string>
+    <string name="choose_card_error">Please, choose the card, or add it</string>
+    <string name="incorrect_amount_error">Incorrect amount</string>
 </resources>

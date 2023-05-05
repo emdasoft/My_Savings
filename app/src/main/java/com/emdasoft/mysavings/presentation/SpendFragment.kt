@@ -80,7 +80,7 @@ class SpendFragment : Fragment() {
         }
 
         viewModel.showInputAmountError.observe(viewLifecycleOwner) {
-            val message = "incorrect amount"
+            val message = getString(R.string.incorrect_amount_error)
             if (it) {
                 binding.tilAmount.error = message
             } else {
@@ -89,7 +89,7 @@ class SpendFragment : Fragment() {
         }
 
         viewModel.showChooseCardError.observe(viewLifecycleOwner) {
-            val message = "Please, choose card or add it"
+            val message = getString(R.string.choose_card_error)
             if (it) {
                 binding.tilCardToSpend.error = message
             } else {
