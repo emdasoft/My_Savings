@@ -71,7 +71,8 @@ class RepositoryImpl(application: Application) : Repository {
         sourceCard: CardItem,
         destinationCard: CardItem
     ) {
-        TODO("Not yet implemented")
+        spendMoney(amount, sourceCard)
+        receiveMoney(amount, destinationCard)
     }
 
     override suspend fun spendMoney(amount: Double, sourceCard: CardItem) {
@@ -80,7 +81,7 @@ class RepositoryImpl(application: Application) : Repository {
         addCard(newItem)
     }
 
-    override suspend fun getMoney(amount: Double, sourceCard: CardItem) {
+    override suspend fun receiveMoney(amount: Double, sourceCard: CardItem) {
         val newAmount = sourceCard.amount + amount
         val newItem = sourceCard.copy(amount = newAmount)
         addCard(newItem)

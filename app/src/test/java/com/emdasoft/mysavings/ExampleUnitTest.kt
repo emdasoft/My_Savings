@@ -1,7 +1,7 @@
 package com.emdasoft.mysavings
 
 import android.app.Application
-import com.emdasoft.mysavings.presentation.CardItemViewModel
+import com.emdasoft.mysavings.presentation.CardViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Test
@@ -19,13 +19,13 @@ class ExampleUnitTest {
 
     @Test
     fun onStartNoTitleError() {
-        val viewModel = CardItemViewModel(application = Application())
+        val viewModel = CardViewModel(application = Application())
         viewModel.showInputTitleError.value?.let { assertFalse(it) }
     }
 
     @Test
     fun onStartNoShouldScreenClose() {
-        val viewModel = CardItemViewModel(application = Application())
+        val viewModel = CardViewModel(application = Application())
         viewModel.shouldScreenClose.value?.let { assertFalse(it) }
     }
 

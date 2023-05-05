@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.GetMoneyFragment">
+    tools:context=".presentation.TransferFragment">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_amount"
+        android:id="@+id/til_amount_to_transfer"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="@string/enter_amount"
-        app:layout_constraintBottom_toTopOf="@id/til_card_to_get"
+        app:layout_constraintBottom_toTopOf="@id/til_card_from"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,19 +27,39 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/til_card_to_get"
+        android:id="@+id/til_card_from"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="@string/choose_card"
+        android:hint="@string/from_card"
+        app:layout_constraintBottom_toTopOf="@id/til_card_to"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/til_amount_to_transfer">
+
+        <AutoCompleteTextView
+            android:id="@+id/auto_complete_card_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_card_to"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/from_card"
         app:layout_constraintBottom_toTopOf="@id/button_get"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_amount">
+        app:layout_constraintTop_toBottomOf="@id/til_card_from">
 
         <AutoCompleteTextView
-            android:id="@+id/auto_complete_card"
+            android:id="@+id/auto_complete_card_to"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none" />
@@ -51,11 +71,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/get_button"
+        android:text="@string/transfer_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/til_card_to_get" />
+        app:layout_constraintTop_toBottomOf="@id/til_card_to" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -52,12 +52,12 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
     }
 
     private fun setOnClickListeners() {
-        binding.tempButtonAdd.setOnClickListener {
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, CardFragment.newInstanceAddMode())
-                .addToBackStack(null)
-                .commit()
-        }
+//        binding.tempButtonAdd.setOnClickListener {
+//            requireActivity().supportFragmentManager.beginTransaction()
+//                .replace(R.id.main_container, CardFragment.newInstanceAddMode())
+//                .addToBackStack(null)
+//                .commit()
+//        }
 
         binding.spendCard.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
@@ -68,7 +68,7 @@ class MainFragment : Fragment(), CardListAdapter.SetOnClickListeners {
 
         binding.receiveCard.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, GetMoneyFragment.newInstance())
+                .replace(R.id.main_container, ReceiveFragment.newInstance())
                 .addToBackStack(null)
                 .commit()
         }

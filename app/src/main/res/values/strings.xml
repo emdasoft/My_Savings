@@ -14,4 +14,8 @@
     <string name="choose_card">choose card</string>
     <string name="spend_button">spend</string>
     <string name="get_button">get</string>
+    <string name="from_card">from card</string>
+    <string name="to_card">to card</string>
+    <string name="transfer_button">transfer</string>
+    <string name="add_card">add card</string>
 </resources>

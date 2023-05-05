@@ -8,15 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.emdasoft.mysavings.data.RepositoryImpl
 import com.emdasoft.mysavings.domain.entity.CardItem
 import com.emdasoft.mysavings.domain.usecases.GetCardListUseCase
-import com.emdasoft.mysavings.domain.usecases.GetMoneyUseCase
+import com.emdasoft.mysavings.domain.usecases.ReceiveMoneyUseCase
 import kotlinx.coroutines.launch
 
-class GetMoneyViewModel(application: Application) : AndroidViewModel(application) {
+class ReceiveViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = RepositoryImpl(application)
 
     private val getCardListUseCase = GetCardListUseCase(repository)
-    private val getMoneyUseCase = GetMoneyUseCase(repository)
+    private val receiveMoneyUseCase = ReceiveMoneyUseCase(repository)
 
     private val _cardList = getCardListUseCase()
     val cardList: LiveData<List<CardItem>>
@@ -35,32 +35,27 @@ class GetMoneyViewModel(application: Application) : AndroidViewModel(application
         get() = _showChooseCardError
 
 
-    fun getMoney(amountInput: String?, sourceCardInput: Any?) {
+    fun getMoney(amountInput: String?, sourceCardInput: CardItem?) {
         val amount = parseAmount(amountInput)
-        val sourceCard = if (sourceCardInput is CardItem) {
-            sourceCardInput
-        } else {
-            null
-        }
-        val isValid = isValid(amount, sourceCard)
+        val isValid = checkForValid(amount, sourceCardInput)
         if (isValid) {
             viewModelScope.launch {
-                sourceCard?.let {
-                    getMoneyUseCase(amount, it)
+                sourceCardInput?.let {
+                    receiveMoneyUseCase(amount, it)
                     _shouldScreenClose.value = true
                 }
             }
         }
     }
 
-    private fun isValid(amount: Double, sourceCard: CardItem?): Boolean {
+    private fun checkForValid(amount: Double, sourceCard: CardItem?): Boolean {
         var result = true
-        if (amount <= 0) {
-            _showInputAmountError.value = true
-            result = false
-        }
         if (sourceCard == null) {
             _showChooseCardError.value = true
+            result = false
+        }
+        if (amount <= 0) {
+            _showInputAmountError.value = true
             result = false
         }
         return result

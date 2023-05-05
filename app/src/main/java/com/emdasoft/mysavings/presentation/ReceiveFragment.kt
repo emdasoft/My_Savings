@@ -8,26 +8,26 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.emdasoft.mysavings.R
-import com.emdasoft.mysavings.databinding.FragmentGetMoneyBinding
+import com.emdasoft.mysavings.databinding.FragmentReceiveBinding
+import com.emdasoft.mysavings.domain.entity.CardItem
 
+class ReceiveFragment : Fragment() {
 
-class GetMoneyFragment : Fragment() {
+    private var selectedCardItem: CardItem? = null
 
-    private var selectedCardItem: Any? = null
-
-    private var _binding: FragmentGetMoneyBinding? = null
-    private val binding: FragmentGetMoneyBinding
+    private var _binding: FragmentReceiveBinding? = null
+    private val binding: FragmentReceiveBinding
         get() = _binding ?: throw RuntimeException("FragmentGetMoneyBinding = null")
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[GetMoneyViewModel::class.java]
+        ViewModelProvider(this)[ReceiveViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentGetMoneyBinding.inflate(inflater, container, false)
+        _binding = FragmentReceiveBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -42,7 +42,7 @@ class GetMoneyFragment : Fragment() {
 
     private fun setListeners() {
         binding.autoCompleteCard.setOnItemClickListener { adapterView, _, i, _ ->
-            selectedCardItem = adapterView.getItemAtPosition(i)
+            selectedCardItem = adapterView.getItemAtPosition(i) as CardItem
         }
 
         binding.buttonGet.setOnClickListener {
@@ -109,6 +109,6 @@ class GetMoneyFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = GetMoneyFragment()
+        fun newInstance() = ReceiveFragment()
     }
 }

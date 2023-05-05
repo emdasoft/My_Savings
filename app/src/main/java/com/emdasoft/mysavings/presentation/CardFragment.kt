@@ -22,7 +22,7 @@ class CardFragment : Fragment() {
         get() = _binding ?: throw RuntimeException("FragmentAddCardBinding = null")
 
     private val viewModel by lazy {
-        ViewModelProvider(this)[CardItemViewModel::class.java]
+        ViewModelProvider(this)[CardViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -194,6 +194,11 @@ class CardFragment : Fragment() {
                 binding.tilCount.error = null
             }
         }
+    }
+
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
     companion object {

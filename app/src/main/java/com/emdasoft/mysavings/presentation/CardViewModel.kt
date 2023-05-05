@@ -14,7 +14,7 @@ import com.emdasoft.mysavings.domain.usecases.EditCardItemUseCase
 import com.emdasoft.mysavings.domain.usecases.GetCardItemUseCase
 import kotlinx.coroutines.launch
 
-class CardItemViewModel(application: Application) : AndroidViewModel(application) {
+class CardViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = RepositoryImpl(application)
 

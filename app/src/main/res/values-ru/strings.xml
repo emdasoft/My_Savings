@@ -15,4 +15,8 @@
     <string name="choose_card">выбрать счет</string>
     <string name="spend_button">потратить</string>
     <string name="get_button">получить</string>
+    <string name="from_card">cо счета</string>
+    <string name="to_card">на счет</string>
+    <string name="transfer_button">перевести</string>
+    <string name="add_card">add card</string>
 </resources>

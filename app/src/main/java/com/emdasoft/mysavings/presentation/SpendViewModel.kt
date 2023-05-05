@@ -35,17 +35,12 @@ class SpendViewModel(application: Application) : AndroidViewModel(application) {
         get() = _showChooseCardError
 
 
-    fun spendMoney(amountInput: String?, sourceCardInput: Any?) {
+    fun spendMoney(amountInput: String?, sourceCardInput: CardItem?) {
         val amount = parseAmount(amountInput)
-        val sourceCard = try {
-            sourceCardInput as CardItem
-        } catch (e: Exception) {
-            null
-        }
-        val isValid = isValid(amount, sourceCard)
+        val isValid = checkForValid(amount, sourceCardInput)
         if (isValid) {
             viewModelScope.launch {
-                sourceCard?.let {
+                sourceCardInput?.let {
                     spendMoneyUseCase(amount, it)
                     _shouldScreenClose.value = true
                 }
@@ -54,16 +49,15 @@ class SpendViewModel(application: Application) : AndroidViewModel(application) {
     }
 
 
-    private fun isValid(amount: Double, card: CardItem?): Boolean {
+    private fun checkForValid(amount: Double, sourceCard: CardItem?): Boolean {
         var result = true
-        if (card == null) {
-            result = false
+        if (sourceCard == null) {
             _showChooseCardError.value = true
-        } else {
-            if (amount <= 0.0 || amount > card.amount) {
-                result = false
-                _showInputAmountError.value = true
-            }
+            result = false
+        }
+        if (amount <= 0) {
+            _showInputAmountError.value = true
+            result = false
         }
         return result
     }

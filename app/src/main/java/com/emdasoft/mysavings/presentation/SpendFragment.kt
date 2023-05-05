@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.emdasoft.mysavings.R
 import com.emdasoft.mysavings.databinding.FragmentSpendBinding
+import com.emdasoft.mysavings.domain.entity.CardItem
 
 
 class SpendFragment : Fragment() {
@@ -17,7 +18,7 @@ class SpendFragment : Fragment() {
         ViewModelProvider(this)[SpendViewModel::class.java]
     }
 
-    private var selectedCardItem: Any? = null
+    private var selectedCardItem: CardItem? = null
 
     private var _binding: FragmentSpendBinding? = null
     private val binding: FragmentSpendBinding
@@ -42,7 +43,7 @@ class SpendFragment : Fragment() {
 
     private fun setListeners() {
         binding.autoCompleteCard.setOnItemClickListener { adapterView, _, i, _ ->
-            selectedCardItem = adapterView.getItemAtPosition(i)
+            selectedCardItem = adapterView.getItemAtPosition(i) as CardItem
         }
 
         binding.buttonSpend.setOnClickListener {
@@ -88,7 +89,7 @@ class SpendFragment : Fragment() {
         }
 
         viewModel.showChooseCardError.observe(viewLifecycleOwner) {
-            val message = "Please, choose card"
+            val message = "Please, choose card or add it"
             if (it) {
                 binding.tilCardToSpend.error = message
             } else {
